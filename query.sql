@@ -20,5 +20,6 @@ CREATE TABLE users
   password VARCHAR   NOT NULL,
   photo    TEXT      NULL    ,
   phone    VARCHAR   NULL    ,
-  bio      VARCHAR   NULL    
+  bio      VARCHAR   NULL,
+  date TIMESTAMP NULL  
 );
