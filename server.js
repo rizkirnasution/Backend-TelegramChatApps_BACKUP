@@ -1,7 +1,7 @@
 const http = require('http');
 const express = require('express');
 const socketIo = require('socket.io');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
 const socketController = require('./src/socket');
@@ -13,12 +13,12 @@ const app = express();
 
 // middleware
 app.use(express.json());
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: false,
-  }),
-);
+// app.use(
+//   helmet({
+//     crossOriginEmbedderPolicy: false,
+//     crossOriginResourcePolicy: false,
+//   }),
+// );
 app.use(xss());
 app.use(cors());
 app.use(express.static('public'));
