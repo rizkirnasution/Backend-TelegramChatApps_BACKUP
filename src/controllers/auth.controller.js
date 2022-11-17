@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const authModel = require('../models/auth.model');
@@ -22,15 +22,16 @@ module.exports = {
         return;
       }
 
-      const { username, email } = req.body;
-      const password = await bcrypt.hash(req.body.password, 10);
+      const { username, email, password } = req.body;
+      const salt = bcrypt.genSaltSync(10);
+      const passwordHash = bcrypt.hashSync(password, 10);
       // const token = crypto.randomBytes(30).toString('hex');
 
       authModel.register({
         id: uuidv4(),
         username,
         email,
-        password,
+        password : passwordHash,
         date: new Date(),
       });
 
