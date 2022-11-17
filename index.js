@@ -3,7 +3,7 @@ const { createServer } = require ("http");
 const express = require('express');
 // const socketIo = require('socket.io');
 const { Server } = require('socket.io');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
 const socketController = require('./src/socket');
@@ -16,17 +16,25 @@ const app = express();
 // middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: false,
-  }),
-);
+// app.use(
+//   helmet({
+//     crossOriginEmbedderPolicy: false,
+//     crossOriginResourcePolicy: false,
+//   }),
+// );
 app.use(xss());
 // app.use(cors());
+// app.use(cors({
+//   origin: "*"
+// }));
+
 app.use(cors({
-  origin: "*"
-}));
+  origin: 'http://localhost:3000',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'PUT', 'POST', 'DELETE'],
+  credentials: true
+}))
+
 app.use(express.static('public'));
 
 // root router
@@ -63,7 +71,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: 'http://localhost:3000',
-//     credentials: true
+    credentials: true
   },
 });
 io.on('connection', (socket) => {
