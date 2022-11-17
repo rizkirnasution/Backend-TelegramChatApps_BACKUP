@@ -5,7 +5,7 @@ const { failed } = require('../utils/createResponse');
 
 // management file
 const multerUpload = multer({
-//   storage: multer.diskStorage({
+  storage: multer.diskStorage({
 //     destination: (req, file, cb) => {
 //       if (file.fieldname === 'photo') {
 //         cb(null, './public/photo');
