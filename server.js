@@ -12,15 +12,19 @@ const { failed } = require('./src/utils/createResponse');
 const app = express();
 
 // middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: false,
-  }),
-);
+// app.use(
+//   helmet({
+//     crossOriginEmbedderPolicy: false,
+//     crossOriginResourcePolicy: false,
+//   }),
+// );
 app.use(xss());
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 app.use(express.static('public'));
 
 // root router
@@ -29,26 +33,28 @@ app.get('/', (req, res) => res.send(`${APP_NAME} API - ${NODE_ENV[0].toUpperCase
 app.use(require('./src/routes/auth.route'));
 app.use(require('./src/routes/user.route'));
 // 404 router
-// app.use((req, res) => {
-//   failed(res, {
-//     code: 404,
-//     payload: 'Resource on that url not found',
-//     message: 'Not Found',
-//   });
-// });
-
-app.use((err, req, res, next) => {
-  const statusCode = err.status;
-  if (res.status(statusCode)) {
-    res.json(createError(statusCode, err));
-  }
-  next();
+app.use((req, res) => {
+  failed(res, {
+    code: 404,
+    payload: 'Resource on that url not found',
+    message: 'Not Found',
+  });
 });
+
+// app.use((err, req, res, next) => {
+//   const statusCode = err.status;
+//   if (res.status(statusCode)) {
+//     res.json(createError(statusCode, err));
+//   }
+//   next();
+// });
 
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: '*',
+    // origin: '*',
+    origin: 'http://localhost:3000',
+    credentials: true
   },
 });
 io.on('connection', (socket) => {

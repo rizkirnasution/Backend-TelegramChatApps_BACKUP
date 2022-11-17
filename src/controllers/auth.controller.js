@@ -24,9 +24,9 @@ module.exports = {
 
       const { username, email } = req.body;
       const password = await bcrypt.hash(req.body.password, 10);
-      const token = crypto.randomBytes(30).toString('hex');
+      // const token = crypto.randomBytes(30).toString('hex');
 
-      const insertData = await authModel.register({
+      authModel.register({
         id: uuidv4(),
         username,
         email,
@@ -51,6 +51,7 @@ module.exports = {
         message: 'Register Success!',
       });
     } catch (error) {
+      console.log(error)
       failed(res, {
         code: 500,
         payload: error.message,
@@ -120,6 +121,7 @@ module.exports = {
         message: 'Login Failed!',
       });
     } catch (error) {
+      console.log(error)
       failed(res, {
         code: 500,
         payload: error.message,
