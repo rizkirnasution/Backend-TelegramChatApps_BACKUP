@@ -13,6 +13,6 @@ const router = express.Router();
 router
   .post('/auth/register', validation.register, runValidation, register)
   .get('/auth/activation/:token', activation)
-  .post('/auth/login', validation.login, login);
+  .post('/auth/login', login);
 
 module.exports = router;
