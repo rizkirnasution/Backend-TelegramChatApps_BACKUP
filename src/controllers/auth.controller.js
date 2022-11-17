@@ -125,7 +125,7 @@ module.exports = {
       console.log(error)
       failed(res, {
         code: 500,
-        payload: error.message,
+        payload: error,
         message: 'Internal Server Error',
       });
     }
