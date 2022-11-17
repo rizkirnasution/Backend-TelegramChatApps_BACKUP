@@ -1,9 +1,7 @@
-// const http = require('http');
 const { createServer } = require ("http");
 const express = require('express');
-// const socketIo = require('socket.io');
 const { Server } = require('socket.io');
-// const helmet = require('helmet');
+const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
 const socketController = require('./src/socket');
@@ -14,7 +12,7 @@ const { failed } = require('./src/utils/createResponse');
 const app = express();
 
 // middleware
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 // app.use(
 //   helmet({
@@ -23,7 +21,6 @@ app.use(express.json());
 //   }),
 // );
 app.use(xss());
-// app.use(cors());
 app.use(cors({
   origin: "*"
 }));
@@ -43,26 +40,11 @@ app.use((req, res) => {
   });
 });
 
-// app.use((err, req, res, next) => {
-//   const statusCode = err.status;
-//   if (res.status(statusCode)) {
-//     res.json(createError(statusCode, err));
-//   }
-//   next();
-// });
-
 // const server = http.createServer(app);
 const httpServer = createServer(app);
-// const io = socketIo(server, {
-//   cors: {
-//     // origin: '*',
-//     origin: 'http://localhost:3000',
-//     credentials: true
-//   },
-// });
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: '*',
     credentials: true
   },
 });
