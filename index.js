@@ -55,7 +55,5 @@ io.on('connection', (socket) => {
 
 // running server
 httpServer.listen(PORT, () => {
-  console.log(`Server started on port ${PORT} with ${NODE_ENV} environment`);
-  console.log(`Visit http://localhost:${PORT}`);
-  console.log('Developed by Rizki Romadhona Nasution');
+  console.log(`server connected http://localhost:${PORT}`);
 });
