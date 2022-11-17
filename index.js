@@ -1,6 +1,8 @@
-const http = require('http');
+// const http = require('http');
+const { createServer } = require ("http");
 const express = require('express');
-const socketIo = require('socket.io');
+// const socketIo = require('socket.io');
+const { Server } = require('socket.io');
 // const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
@@ -49,10 +51,17 @@ app.use((req, res) => {
 //   next();
 // });
 
-const server = http.createServer(app);
-const io = socketIo(server, {
+// const server = http.createServer(app);
+const httpServer = createServer(app);
+// const io = socketIo(server, {
+//   cors: {
+//     // origin: '*',
+//     origin: 'http://localhost:3000',
+//     credentials: true
+//   },
+// });
+const io = new Server(httpServer, {
   cors: {
-    // origin: '*',
     origin: 'http://localhost:3000',
     credentials: true
   },
@@ -63,7 +72,7 @@ io.on('connection', (socket) => {
 });
 
 // running server
-server.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server started on port ${PORT} with ${NODE_ENV} environment`);
   console.log(`Visit http://localhost:${PORT}`);
   console.log('Developed by Rizki Romadhona Nasution');
