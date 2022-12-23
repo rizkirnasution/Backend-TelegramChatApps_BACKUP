@@ -27,7 +27,7 @@ This is a Restful API repository for Telegram Chat App. This Restful API is buil
 
 ### Installation
 
-- Clone this project with `git clone https://github.com/andry-pebrianto/nibiruchat-api.git`
+- Clone this project with `git clone https://github.com/rizkirnasution/Backend-TelegramChatApps_BACKUP.git`
 - Install package required with `npm install`
 - Setting .env
 
